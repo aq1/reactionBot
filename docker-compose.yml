@@ -12,3 +12,5 @@ services:
     image: reaction_bot:${REACTION_BOT_RELEASE}
     env_file:
       - ./.env
+    environment:
+      REACTION_BOT_RELEASE: "${REACTION_BOT_RELEASE}"
