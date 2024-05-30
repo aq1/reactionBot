@@ -1,0 +1,14 @@
+networks:
+  bond:
+    external: true
+
+services:
+  bot:
+    restart: always
+    networks:
+      - bond
+    volumes:
+      - ./reactions.db:/app/reactions.db
+    image: reaction_bot:${REACTION_BOT_RELEASE}
+    env_file:
+      - ./.env
