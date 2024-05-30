@@ -7,7 +7,7 @@ import db
 
 def add_reaction(chat_id: int, user_id: int, emoji_id: str, delta: int):
     db.execute(
-        'insert into stat(user_id, chat_id, emoji_id, delta) values(?, ?, ?, ?)',
+        'insert into reaction(user_id, chat_id, emoji_id, delta) values(?, ?, ?, ?)',
         (user_id, chat_id, emoji_id, delta),
     )
 

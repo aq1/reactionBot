@@ -30,6 +30,7 @@ def init_db():
             user_id integer not null,
             chat_id integer not null,
             emoji_id text not null,
+            delta integer not null,
             created_at integer default current_timestamp,
             foreign key(user_id) references telegram_user(id)
         )
