@@ -2,10 +2,10 @@ from telegram import Update
 from telegram.ext import Application, MessageReactionHandler, CommandHandler, MessageHandler, filters
 
 import db
-from src import settings
-from src.handlers.log_message import log_message
-from src.handlers.log_reaction import log_reaction
-from src.handlers.stats_command import stats_command
+import settings
+from handlers.log_message import log_message
+from handlers.log_reaction import log_reaction
+from handlers.stats_command import stats_command
 
 
 async def post_init(_):
