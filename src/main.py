@@ -12,7 +12,7 @@ from handlers.stats_command import stats_command
 async def post_init(app: Application):
     await app.bot.send_message(
         chat_id=settings.ADMIN_CHAT_ID,
-        text=f'{app.bot.username} started'
+        text=f'{app.bot.username} {settings.RELEASE} started'
     )
 
 
