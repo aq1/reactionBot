@@ -25,6 +25,10 @@ def update_or_create_user(user: User):
 
 async def log_message(update: Update, _):
     update_or_create_user(update.effective_user)
+
+    if update.effective_chat.id > 0:
+        return
+
     db.execute(
         'insert into message(chat_id, message_id, user_id) values(?, ?, ?)',
         (update.effective_chat.id, update.effective_message.id, update.effective_user.id),
