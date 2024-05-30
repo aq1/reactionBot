@@ -1,3 +1,5 @@
+import re
+
 from telegram import Update
 from telegram.ext import Application, MessageReactionHandler, CommandHandler, MessageHandler, filters
 
@@ -27,7 +29,7 @@ def start_bot():
 
     application.add_handler(CommandHandler('stats', stats_command), group=1)
     application.add_handler(MessageReactionHandler(log_reaction), group=1)
-    application.add_handler(MessageHandler(filters.Regex(r'^sql (.*)$'), sql_handler), group=1)
+    application.add_handler(MessageHandler(filters.Regex(re.compile(r'^sql ([\s\S]+)$', re.MULTILINE)), sql_handler), group=1)
 
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
