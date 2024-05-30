@@ -25,12 +25,12 @@ def init_db():
     ''')
 
     execute('''  
-        create table if not exists stat (
+        create table if not exists reaction (
             id integer primary key autoincrement,
             user_id integer not null,
             chat_id integer not null,
             emoji_id text not null,
-            count integer not null,
+            created_at integer default current_timestamp,
             foreign key(user_id) references telegram_user(id)
         )
     ''')

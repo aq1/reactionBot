@@ -5,22 +5,11 @@ from telegram import Update, ReactionType
 import db
 
 
-def add_reaction(chat_id: int, user_id: int, emoji_id: str, count: int):
-    emoji = db.execute(
-        'select id from stat where user_id=? and chat_id=? and emoji_id=?',
-        (user_id, chat_id, emoji_id),
+def add_reaction(chat_id: int, user_id: int, emoji_id: str, delta: int):
+    db.execute(
+        'insert into stat(user_id, chat_id, emoji_id, delta) values(?, ?, ?, ?)',
+        (user_id, chat_id, emoji_id, delta),
     )
-
-    if len(emoji) == 0:
-        db.execute(
-            'insert into stat(user_id, chat_id, emoji_id, count) values(?, ?, ?, ?)',
-            (user_id, chat_id, emoji_id, max(0, count)),
-        )
-    else:
-        db.execute(
-            'update stat set count=count + ? where user_id=? and chat_id=? and emoji_id=?',
-            (count, user_id, chat_id, emoji_id),
-        )
 
 
 async def log_reaction(update: Update, _):
@@ -33,7 +22,7 @@ async def log_reaction(update: Update, _):
     if hasattr(update.message_reaction, 'new_reaction'):
         new = update.message_reaction.new_reaction
 
-    for count, reactions in zip((-1, 1), (old, new)):
+    for delta, reactions in zip((-1, 1), (old, new)):
         for reaction in reactions:
             if reaction.type == ReactionType.CUSTOM_EMOJI:
                 emoji_id = reaction.custom_emoji_id
@@ -56,5 +45,5 @@ async def log_reaction(update: Update, _):
                 chat_id=update.effective_chat.id,
                 user_id=user_id,
                 emoji_id=emoji_id,
-                count=count,
+                delta=delta,
             )
