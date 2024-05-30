@@ -1,6 +1,6 @@
 from telegram import Update, User
 
-from src import db
+import db
 
 
 def update_or_create_user(user: User):

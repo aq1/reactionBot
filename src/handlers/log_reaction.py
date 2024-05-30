@@ -2,9 +2,7 @@ from typing import Sequence
 
 from telegram import Update, ReactionType
 
-from src import (
-    db,
-)
+import db
 
 
 def add_reaction(chat_id: int, user_id: int, emoji_id: str, count: int):
