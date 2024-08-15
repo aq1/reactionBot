@@ -43,9 +43,13 @@ def init_db():
     )
 
 
-def execute(sql: str, arguments: tuple = None):
-    cursor = connection.cursor()
+def get_cursor():
+    return connection.cursor()
+
+
+def execute(sql: str, arguments: tuple | None = None):
+    cursor = get_cursor()
     data = cursor.execute(sql, arguments or tuple()).fetchall()
     connection.commit()
     cursor.close()
-    return data, cursor
+    return data
