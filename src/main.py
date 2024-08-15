@@ -1,8 +1,10 @@
 import re
 
+from telegram.constants import ParseMode
 from telegram import Update
 from telegram.ext import (
     Application,
+    Defaults,
     MessageReactionHandler,
     CommandHandler,
     MessageHandler,
@@ -29,6 +31,7 @@ def start_bot():
         Application.builder()
         .token(settings.TELEGRAM_TOKEN)
         .post_init(post_init)
+        .defaults(Defaults(parse_mode=ParseMode.HTML))
         .build()
     )
 

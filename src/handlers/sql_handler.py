@@ -3,6 +3,8 @@ from sqlite3 import OperationalError
 from telegram import Update
 from telegram.ext import CallbackContext
 
+from prettytable import PrettyTable
+
 import db
 import settings
 
@@ -17,7 +19,7 @@ async def sql_handler(update: Update, context: CallbackContext):
         return
 
     try:
-        result = db.execute(sql)
+        result, cursor = db.execute(sql)
     except OperationalError as e:
         await update.effective_message.reply_text(str(e))
         return
@@ -25,13 +27,17 @@ async def sql_handler(update: Update, context: CallbackContext):
     if not result:
         await update.effective_message.reply_text("No result")
 
-    text = ""
+    table = PrettyTable(
+        field_names=[desc[0] for desc in cursor.description],
+    )
     for i, row in enumerate(result, 1):
-        text += "\n" + ", ".join(map(str, row))
+        table.add_row(row)
         if i % 10 == 0:
-            await update.effective_message.reply_text(text)
-            text = ""
+            await update.effective_message.reply_text(f"<code>{table}</code>")
+            table = PrettyTable(
+                field_names=[desc[0] for desc in cursor.description],
+            )
 
-    if not text:
+    if not table.rows:
         return
-    await update.effective_message.reply_text(text)
+    await update.effective_message.reply_text(f"<code>{table}</code>")

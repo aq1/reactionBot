@@ -23,13 +23,13 @@ def init_db():
         create table if not exists telegram_user (
             id integer primary key autoincrement,
             username text not null,
-            fullname text not null 
+            fullname text not null
         )
     """
     )
 
     execute(
-        """  
+        """
         create table if not exists reaction (
             id integer primary key autoincrement,
             user_id integer not null,
@@ -48,4 +48,4 @@ def execute(sql: str, arguments: tuple = None):
     data = cursor.execute(sql, arguments or tuple()).fetchall()
     connection.commit()
     cursor.close()
-    return data
+    return data, cursor
