@@ -23,14 +23,14 @@ async def sql_handler(update: Update, context: CallbackContext):
         return
 
     if not result:
-        await update.effective_message.reply_text('No result')
+        await update.effective_message.reply_text("No result")
 
-    text = ''
+    text = ""
     for i, row in enumerate(result, 1):
-        text += '\n' + ', '.join(map(str, row))
+        text += "\n" + ", ".join(map(str, row))
         if i % 10 == 0:
             await update.effective_message.reply_text(text)
-            text = ''
+            text = ""
 
     if not text:
         return

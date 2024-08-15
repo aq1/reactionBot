@@ -7,7 +7,7 @@ import db
 
 def add_reaction(chat_id: int, user_id: int, emoji_id: str, delta: int):
     db.execute(
-        'insert into reaction(user_id, chat_id, emoji_id, delta) values(?, ?, ?, ?)',
+        "insert into reaction(user_id, chat_id, emoji_id, delta) values(?, ?, ?, ?)",
         (user_id, chat_id, emoji_id, delta),
     )
 
@@ -16,10 +16,10 @@ async def log_reaction(update: Update, _):
     old: Sequence[ReactionType] = []
     new: Sequence[ReactionType] = []
 
-    if hasattr(update.message_reaction, 'old_reaction'):
+    if hasattr(update.message_reaction, "old_reaction"):
         old = update.message_reaction.old_reaction
 
-    if hasattr(update.message_reaction, 'new_reaction'):
+    if hasattr(update.message_reaction, "new_reaction"):
         new = update.message_reaction.new_reaction
 
     for delta, reactions in zip((-1, 1), (old, new)):
@@ -30,8 +30,8 @@ async def log_reaction(update: Update, _):
                 emoji_id = reaction.emoji
 
             message = db.execute(
-                'select user_id from message where chat_id=? and message_id=?',
-                (update.message_reaction.chat.id, update.message_reaction.message_id)
+                "select user_id from message where chat_id=? and message_id=?",
+                (update.message_reaction.chat.id, update.message_reaction.message_id),
             )
             if not message:
                 continue

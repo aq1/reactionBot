@@ -6,7 +6,8 @@ connection = sqlite3.connect(settings.DATABASE_FILE)
 
 
 def init_db():
-    execute('''
+    execute(
+        """
         create table if not exists message (
             id integer primary key autoincrement,
             chat_id integer not null,
@@ -14,17 +15,21 @@ def init_db():
             user_id integer not null,
             foreign key(user_id) references telegram_user(id)
         )
-    ''')
+    """
+    )
 
-    execute('''
+    execute(
+        """
         create table if not exists telegram_user (
             id integer primary key autoincrement,
             username text not null,
             fullname text not null 
         )
-    ''')
+    """
+    )
 
-    execute('''  
+    execute(
+        """  
         create table if not exists reaction (
             id integer primary key autoincrement,
             user_id integer not null,
@@ -34,7 +39,8 @@ def init_db():
             created_at integer default current_timestamp,
             foreign key(user_id) references telegram_user(id)
         )
-    ''')
+    """
+    )
 
 
 def execute(sql: str, arguments: tuple = None):
