@@ -9,9 +9,9 @@ import db
 import settings
 from handlers.log_message import log_message
 from handlers.log_reaction import log_reaction
+from handlers.social_link_handler import social_link_handler
 from handlers.sql_handler import sql_handler
 from handlers.stats_command import stats_command
-from handlers.twitter_link_handler import twitter_link_handler
 
 
 async def post_init(app: Application):
@@ -33,7 +33,7 @@ def start_bot():
     application.add_handler(MessageHandler(filters.ALL, log_message), group=0)
 
     application.add_handler(CommandHandler("stats", stats_command), group=1)
-    application.add_handler(MessageHandler(filters.Entity("url"), twitter_link_handler), group=1)
+    application.add_handler(MessageHandler(filters.Entity("url"), social_link_handler), group=1)
     application.add_handler(
         MessageHandler(
             filters.Regex(re.compile(r"^sql ([\s\S]+)$", re.MULTILINE)), sql_handler
