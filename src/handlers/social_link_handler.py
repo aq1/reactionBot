@@ -17,7 +17,7 @@ async def social_link_handler(update: Update, _):
         if link.hostname == "x.com":
             links.append(f"https://fixupx.com{link.path}")
         if link.hostname == "www.instagram.com" and link.path.startswith("/p/"):
-            links.append(f"https://instagramez.com{link.path}")
+            links.append(f"https://instagramez.com{link.path}?{link.query}")
 
     for link in links:
         await update.effective_message.reply_text(link)
