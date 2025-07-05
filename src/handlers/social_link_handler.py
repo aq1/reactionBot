@@ -13,12 +13,11 @@ async def social_link_handler(update: Update, _):
     for entity in update.effective_message.entities:
         if entity.type not in [entity.URL, entity.TEXT_LINK]:
             continue
-        link = update.effective_message.text[entity.offset:entity.offset + entity.length]
-        parsed_link = urlparse(link)
-        if parsed_link.hostname == "x.com":
-            links.append(f"https://fixupx.com{parsed_link.path}")
-        if parsed_link.hostname == "instagram.com":
-            links.append(f"https://ddinstagram.com{parsed_link.path}")
+        link = urlparse(update.effective_message.text[entity.offset:entity.offset + entity.length])
+        if link.hostname == "x.com":
+            links.append(f"https://fixupx.com{link.path}")
+        if link.hostname == "www.instagram.com" and link.path.startswith("/p/"):
+            links.append(f"https://instagramez.com{link.path}")
 
     for link in links:
         await update.effective_message.reply_text(link)
