@@ -14,9 +14,11 @@ async def social_link_handler(update: Update, _):
         if entity.type not in [entity.URL, entity.TEXT_LINK]:
             continue
         link = urlparse(update.effective_message.text[entity.offset:entity.offset + entity.length])
+        if not link.hostname:
+            continue
         if link.hostname == "x.com":
             links.append(f"https://fixupx.com{link.path}")
-        if link.hostname == "www.instagram.com" and link.path.startswith("/p/"):
+        if link.hostname.endswith("instagram.com") and link.path.startswith("/p/"):
             links.append(f"https://ddinstagram.com{link.path}?{link.query}".rstrip("?"))
 
     for link in links:
