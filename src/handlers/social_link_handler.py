@@ -18,7 +18,7 @@ async def social_link_handler(update: Update, _):
             continue
         if link.hostname == "x.com":
             links.append(f"https://fixupx.com{link.path}")
-        if link.hostname.endswith("instagram.com") and link.path.startswith("/p/"):
+        if link.hostname.endswith("instagram.com") and not link.path.startswith("/stories/"):
             links.append(f"https://ddinstagram.com{link.path}")
 
     for link in links:
