@@ -1,12 +1,13 @@
 from sqlite3 import OperationalError
 
+from prettytable import from_db_cursor
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from prettytable import from_db_cursor
-
 import db
 import settings
+
+MAX_ROWS = 100
 
 
 async def sql_handler(update: Update, context: CallbackContext):
@@ -30,7 +31,7 @@ async def sql_handler(update: Update, context: CallbackContext):
         return
 
     i = 0
-    while i < len(table.rows):
+    while i < len(table.rows) and i < MAX_ROWS:
         await update.effective_message.reply_text(
             text=f"<code>{table.get_string(start=i, end=i + 10)}</code>",
         )
