@@ -32,14 +32,14 @@ def start_bot():
 
     application.add_handler(MessageHandler(filters.ALL, log_message), group=0)
 
-    application.add_handler(CommandHandler("stats", stats_command), group=1)
-    application.add_handler(MessageHandler(filters.Entity("url"), social_link_handler), group=1)
     application.add_handler(
         MessageHandler(
             filters.Regex(re.compile(r"^sql ([\s\S]+)$", re.MULTILINE)), sql_handler
         ),
         group=1,
     )
+    application.add_handler(CommandHandler("stats", stats_command), group=1)
+    application.add_handler(MessageHandler(filters.Entity("url"), social_link_handler), group=1)
 
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
