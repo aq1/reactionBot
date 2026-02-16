@@ -36,6 +36,10 @@ COPY --from=builder --chown=nonroot:nonroot /app /app
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
 
+# Setup a non-root user
+RUN groupadd --system --gid 999 aq1 \
+ && useradd --system --gid 999 --uid 999 --create-home aq1
+
 # Use the non-root user to run our application
 USER aq1
 
