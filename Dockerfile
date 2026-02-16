@@ -14,7 +14,7 @@ ENV UV_TOOL_BIN_DIR=/usr/local/bin
 
 WORKDIR /app
 
-COPY ./src .
+COPY . /app
 
 RUN uv sync --locked
 # Place executables in the environment at the front of the path
