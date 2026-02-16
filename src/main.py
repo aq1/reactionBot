@@ -2,8 +2,14 @@ import re
 
 from telegram import Update
 from telegram.constants import ParseMode
-from telegram.ext import (Application, CommandHandler, Defaults,
-                          MessageHandler, MessageReactionHandler, filters)
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    Defaults,
+    MessageHandler,
+    MessageReactionHandler,
+    filters,
+)
 
 import db
 import settings
@@ -39,7 +45,9 @@ def start_bot():
         group=1,
     )
     application.add_handler(CommandHandler("stats", stats_command), group=1)
-    application.add_handler(MessageHandler(filters.Entity("url"), social_link_handler), group=1)
+    application.add_handler(
+        MessageHandler(filters.Entity("url"), social_link_handler), group=1
+    )
 
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
